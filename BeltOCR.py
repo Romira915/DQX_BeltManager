@@ -40,7 +40,3 @@ def BelttoString(path):
     res = res.replace("\n\n","\n")
     print(res)
     return res
-
-    # img = cv2.imread("conv.png")
-    # cv2.imshow("img", img)
-    # cv2.waitKey()
