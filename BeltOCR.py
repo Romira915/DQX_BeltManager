@@ -4,6 +4,8 @@ import pyocr
 import pyocr.builders
 import cv2
 import BeltScreenshots as bs
+import pandas as pd
+
 
 def BelttoString(path):
     tools = pyocr.get_available_tools()
@@ -19,7 +21,7 @@ def BelttoString(path):
     img_rgb = img_org.convert("RGB")
     pixels = img_rgb.load()
 
-    # 原稿画像加工（黒っぽい色以外は白=255,255,255にする）
+    # 原稿画像加工（白っぽいものを黒 = #000000にし，それ以外を白 = #FFFFFFにする）
     c_max = 190
     for j in range(img_rgb.size[1]):
         for i in range(img_rgb.size[0]):
@@ -35,8 +37,17 @@ def BelttoString(path):
                 pixels[i, j] = (255, 255, 255)
 
     res = tool.image_to_string(img_rgb, lang="jpn",
-                            builder=pyocr.builders.TextBuilder(tesseract_layout=6))
+                               builder=pyocr.builders.TextBuilder(tesseract_layout=6))
 
-    res = res.replace("\n\n","\n")
+    res = res.replace("\n\n", "\n")
     print(res)
     return res
+
+
+def BeltStringImprover(beltstr: list):
+    pass
+
+
+def __BeltStringImprover__(beltstr: str):
+    connectabilityM = pd.read_csv(
+        "systemdata/connectabilityMatrix.csv", engine="python", index_col=0)
